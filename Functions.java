@@ -1,6 +1,7 @@
 package binarysearch;
 
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 public class Functions {
 
@@ -16,13 +17,13 @@ public class Functions {
         System.out.println("What is the maximum integer value your number could take?");
         initialMax = readDouble();
         maxVal = initialMax;
-        System.out.println("Think of a number between 0 and " + initialMax);
+        System.out.println("Think of a number between 0 and " + clean(initialMax));
 
         //numberOfTries calculates how many guesses it will take
         //in the worst case scenario to guess the user's number using binary search.
         numberOfTries = Math.ceil(Math.log(initialMax) / Math.log(2));
         
-        System.out.println("Okay got your number? I think I can guess your number in " + numberOfTries + " tries. Try and prove me wrong!");
+        System.out.println("Okay got your number? I think I can guess your number in " + clean(numberOfTries) + " tries. Try and prove me wrong!");
         loopProcess();
     }
 
@@ -58,7 +59,7 @@ public class Functions {
         int i = 0;
         while (true) {
             findMiddle();
-            System.out.println("Is your number greater than " + currentMid + "? [Y or N]");
+            System.out.println("Is your number greater than " + clean(currentMid) + "? [Y or N]");
             i++;
             if (rightOfMid()) {
                 minVal = currentMid + 1;
@@ -66,7 +67,7 @@ public class Functions {
                 maxVal = currentMid;
             }
             if (minVal == maxVal) {
-                System.out.println("Your number is " + minVal + "!");
+                System.out.println("Your number is " + clean(minVal) + "!");
                 System.out.println("I guessed it in " + i + " tries");
                 break;
             }
@@ -85,5 +86,11 @@ public class Functions {
             }
         }
         return input.equals("Y");
+    }
+    
+    //Returns doubles as a string without decimal points
+    public String clean(double input){
+        DecimalFormat numberFormat = new DecimalFormat("#");
+        return numberFormat.format(input);
     }
 }
